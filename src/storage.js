@@ -2,7 +2,9 @@ const debug = require('debug')('koa-oai-router:cache:storage');
 const timestring = require('timestring');
 const { inherits } = require('util');
 const { Client } = require('catbox');
-const { serialize, deserialize, di, da } = require('./helper');
+const {
+  serialize, deserialize, di, da,
+} = require('./helper');
 
 function Storage(engine, options) {
   this.client = new Client(engine, options);

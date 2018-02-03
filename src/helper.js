@@ -1,6 +1,7 @@
 const _serialize = require('serialize-javascript');
 const _readall = require('readall');
 const perfy = require('perfy');
+const vm = require('vm');
 const debug = require('debug')('koa-oai-router:cache:helper');
 
 /**
@@ -50,7 +51,7 @@ function deserialize(serialized) {
   debug('deserialize', serialized);
 
   di('deserialize');
-  const ret = eval(`(${serialized})`);
+  const ret = vm.runInThisContext(`(${serialized})`, { timeout: 5000 });
   da('deserialize');
 
   if (ret.primitive === 'buffer') {
