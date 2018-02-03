@@ -1,0 +1,277 @@
+/pets-string:
+  get:
+    description: "Returns all pets from the system that the user has access to"
+    operationId: "findPets"
+    produces:
+      - "application/json"
+    tags:
+      - pets
+    parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+    x-oai-cache:
+      expire: 10s
+    x-oai-middleware:
+      - file: pets
+        handler: replyString
+    responses:
+      "200":
+        description: "pet response"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Pet"
+      default:
+        description: "unexpected error"
+  post:
+    description: "Returns all pets from the system that the user has access to"
+    operationId: "findPets"
+    produces:
+      - "application/json"
+    tags:
+      - pets
+    parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+    x-oai-cache:
+      expire: 10s
+    x-oai-middleware:
+      - file: pets
+        handler: replyString
+    responses:
+      "200":
+        description: "pet response"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Pet"
+      default:
+        description: "unexpected error"
+
+/pets-object:
+  get:
+    description: "Returns all pets from the system that the user has access to"
+    operationId: "findPets"
+    produces:
+      - "application/json"
+    tags:
+      - pets
+    parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+    x-oai-cache:
+      expire: 10s
+    x-oai-middleware:
+      - file: pets
+        handler: replyObject
+    responses:
+      "200":
+        description: "pet response"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Pet"
+      default:
+        description: "unexpected error"
+
+/pets-number:
+  get:
+    description: "Returns all pets from the system that the user has access to"
+    operationId: "findPets"
+    produces:
+      - "application/json"
+    tags:
+      - pets
+    parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+    x-oai-cache:
+      expire: 10s
+    x-oai-middleware:
+      - file: pets
+        handler: replyNumber
+    responses:
+      "200":
+        description: "pet response"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Pet"
+      default:
+        description: "unexpected error"
+
+/pets-buffer:
+  get:
+    description: "Returns all pets from the system that the user has access to"
+    operationId: "findPets"
+    produces:
+      - "application/json"
+    tags:
+      - pets
+    parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+    x-oai-cache:
+      expire: 10s
+    x-oai-middleware:
+      - file: pets
+        handler: replyBuffer
+    responses:
+      "200":
+        description: "pet response"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Pet"
+      default:
+        description: "unexpected error"
+
+/pets-stream:
+  get:
+    description: "Returns all pets from the system that the user has access to"
+    operationId: "findPets"
+    produces:
+      - "application/json"
+    tags:
+      - pets
+    parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+    x-oai-cache:
+      expire: 10s
+    x-oai-middleware:
+      - file: pets
+        handler: replyStream
+    responses:
+      "200":
+        description: "pet response"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Pet"
+      default:
+        description: "unexpected error"
+
+/pets-400:
+  get:
+    description: "Returns all pets from the system that the user has access to"
+    operationId: "findPets"
+    produces:
+      - "application/json"
+    tags:
+      - pets
+    parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+    x-oai-cache:
+      expire: 10s
+    x-oai-middleware:
+      - file: pets
+        handler: reply400
+    responses:
+      "200":
+        description: "pet response"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Pet"
+      default:
+        description: "unexpected error"
+
+/pets-no-content-type:
+  get:
+    description: "Returns all pets from the system that the user has access to"
+    operationId: "findPets"
+    produces:
+      - "application/json"
+    tags:
+      - pets
+    parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+    x-oai-cache:
+      expire: 10s
+    x-oai-middleware:
+      - file: pets
+        handler: replyNoContentType
+    responses:
+      "200":
+        description: "pet response"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Pet"
+      default:
+        description: "unexpected error"
+
+/pets-throw:
+  get:
+    description: "Returns all pets from the system that the user has access to"
+    operationId: "findPets"
+    produces:
+      - "application/json"
+    tags:
+      - pets
+    parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+    x-oai-cache:
+      expire: 10s
+    x-oai-middleware:
+      - file: pets
+        handler: replyThrow
+    responses:
+      "200":
+        description: "pet response"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Pet"
+      default:
+        description: "unexpected error"
+
+/pets-stream-invalid:
+  get:
+    description: "Returns all pets from the system that the user has access to"
+    operationId: "findPets"
+    produces:
+      - "application/json"
+    tags:
+      - pets
+    parameters:
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+    x-oai-cache:
+      expire: 10s
+    x-oai-middleware:
+      - file: pets
+        handler: replyStreamInvalid
+    responses:
+      "200":
+        description: "pet response"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Pet"
+      default:
+        description: "unexpected error"
