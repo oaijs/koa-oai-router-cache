@@ -9,12 +9,19 @@ async function high(prefix, options = {}, pluginOpts = {}) {
 
   const ret = await init({
     apiDoc: `${prefix}/api`,
-    plugins: {
-      cache: cache({ engine: catboxRedis, options, hit, key, value }),
-      middleware: middleware(),
-    },
+    plugins: [
+      cache,
+      middleware,
+    ],
     options: {
       middleware: `${prefix}/controllers`,
+      cache: {
+        engine: catboxRedis,
+        options,
+        hit,
+        key,
+        value,
+      },
     },
   });
 
