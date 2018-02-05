@@ -26,6 +26,17 @@ class CachePlugin extends Plugin {
     this.field = 'x-oai-cache';
   }
 
+  async init() {
+    const {
+      engine,
+      options,
+    } = this.args || {};
+
+    this.client = new Storage(engine, options);
+
+    await this.client.start();
+  }
+
   async handler(docOpts) {
     const args = this.args || {};
 
@@ -38,15 +49,13 @@ class CachePlugin extends Plugin {
     } = docOpts;
 
     const {
-      engine,
-      options,
       hit: originalHit,
       key: keyBuilder = getKeyBuilder,
       value: valueBuilder = getValueBuilder,
     } = args;
     const hit = getHit(originalHit);
 
-    const client = new Storage(engine, options);
+
     debug('config', docOpts);
 
     return async (ctx, next) => {
@@ -56,7 +65,7 @@ class CachePlugin extends Plugin {
       }
 
       const cacheKey = await keyBuilder(ctx);
-      const cachedValue = await client.getCacheData(cacheKey);
+      const cachedValue = await this.client.getCacheData(cacheKey);
       debug('cacheKey:', cacheKey);
       debug('cachedValue:', cachedValue);
 
@@ -76,7 +85,7 @@ class CachePlugin extends Plugin {
 
       // Cache success response.
       const newValue = await valueBuilder(ctx);
-      client.setCacheData(cacheKey, newValue, fieldValue);
+      await this.client.setCacheData(cacheKey, newValue, fieldValue);
 
       debug('newCache', cacheKey);
       debug('newCacheValue', newValue);

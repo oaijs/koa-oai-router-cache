@@ -8,9 +8,11 @@ const {
 
 function Storage(engine, options) {
   this.client = new Client(engine, options);
-
-  this.client.start();
 }
+
+Storage.prototype.start = async function name() {
+  await this.client.start();
+};
 
 /**
  * Get cached value.
