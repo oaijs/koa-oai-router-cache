@@ -1,16 +1,13 @@
 const crypto = require('crypto');
 
-const { readall, di, da } = require('./helper');
+const { readall } = require('./helper');
 
 function md5(content) {
-  di('md5');
-
   const ret = crypto
     .createHmac('md5', 'hello world!')
     .update(content)
     .digest('hex');
 
-  da('md5');
   return ret;
 }
 
@@ -42,15 +39,11 @@ async function getKeyBuilder(ctx) {
   } = ctx;
   const { body } = ctx.request;
 
-  di('getKeyBuilder');
-
   const id = md5([
     JSON.stringify(query),
     JSON.stringify(params),
     JSON.stringify(body),
   ].join());
-
-  da('getKeyBuilder');
 
   const segment = path.replace(/\//g, '___');
 

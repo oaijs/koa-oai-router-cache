@@ -3,7 +3,7 @@ const timestring = require('timestring');
 const { inherits } = require('util');
 const { Client } = require('catbox');
 const {
-  serialize, deserialize, di, da,
+  serialize, deserialize,
 } = require('./helper');
 
 function Storage(engine, options) {
@@ -23,9 +23,7 @@ Storage.prototype.start = async function name() {
 Storage.prototype.getCacheData = async function getCacheData(key) {
   debug('getCacheData', key);
 
-  di('getCacheData.get');
   const cachedValue = await this.client.get(key);
-  da('getCacheData.get');
 
   if (cachedValue !== null) {
     return deserialize(cachedValue.item);
@@ -63,9 +61,7 @@ Storage.prototype.setCacheData = async function setCacheData(key, value, options
     const serializedValue = serialize(value);
     debug(`setCacheData ${JSON.stringify(key)} ${serializedValue} ${JSON.stringify(options)}`);
 
-    di('setCacheData.set');
     await this.client.set(key, serializedValue, Number(ttl));
-    da('setCacheData.set');
   });
 };
 
