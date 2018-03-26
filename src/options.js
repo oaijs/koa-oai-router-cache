@@ -1,3 +1,5 @@
+const pick = require('lodash.pick');
+const map = require('lodash.map');
 const crypto = require('crypto');
 
 const { readall } = require('./helper');
@@ -31,18 +33,21 @@ function getHit(hit) {
  * @param {object} ctx
  * @returns {string}
  */
-async function getKeyBuilder(ctx) {
-  const {
-    path,
+async function getKeyBuilder(ctx, keyInParameters, schemas) {
+  let {
     query,
     params,
   } = ctx;
-  const { body } = ctx.request;
+  const { path } = ctx;
+
+  if (keyInParameters) {
+    query = pick(query, map(schemas.query, 'name'));
+    params = pick(params, map(schemas.path, 'name'));
+  }
 
   const id = md5([
     JSON.stringify(query),
     JSON.stringify(params),
-    JSON.stringify(body),
   ].join());
 
   const segment = path.replace(/\//g, '___');

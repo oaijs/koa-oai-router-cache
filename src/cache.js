@@ -1,5 +1,6 @@
 const assert = require('assert');
 const debug = require('debug')('koa-oai-router:cache');
+const groupBy = require('lodash.groupby');
 const Router = require('koa-oai-router');
 
 const { getHit, getKeyBuilder, getValueBuilder } = require('./options');
@@ -46,14 +47,19 @@ class CachePlugin extends Plugin {
     const {
       fieldValue,
       operation,
+      operationValue,
     } = docOpts;
+    const { parameters } = operationValue;
 
     const {
       hit: originalHit,
       key: keyBuilder = getKeyBuilder,
+      keyInParameters = true,
       value: valueBuilder = getValueBuilder,
     } = args;
     const hit = getHit(originalHit);
+
+    const schemas = groupBy(parameters, 'in');
 
 
     debug('config', docOpts);
@@ -64,7 +70,7 @@ class CachePlugin extends Plugin {
         return;
       }
 
-      const cacheKey = await keyBuilder(ctx);
+      const cacheKey = await keyBuilder(ctx, keyInParameters, schemas);
       const cachedValue = await this.client.getCacheData(cacheKey);
       debug('cacheKey:', cacheKey);
       debug('cachedValue:', cachedValue);
