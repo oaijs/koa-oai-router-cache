@@ -1,6 +1,6 @@
 {
   "name": "koa-oai-router-cache",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "cache plugin for koa-oai-router",
   "main": "src/cache.js",
   "scripts": {
