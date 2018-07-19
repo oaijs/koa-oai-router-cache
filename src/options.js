@@ -29,6 +29,14 @@ function getHit(hit) {
 }
 
 /**
+ * Get uid from session
+ * @param {*} ctx
+ */
+async function getUidBuilder(ctx) {
+  return '';
+}
+
+/**
  * Get cache key from ctx.
  * @param {object} ctx
  * @returns {string}
@@ -68,6 +76,7 @@ async function getValueBuilder(ctx) {
 
 module.exports = {
   getHit,
+  getUidBuilder,
   getKeyBuilder,
   getValueBuilder,
 };

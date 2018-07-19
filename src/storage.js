@@ -2,16 +2,20 @@ const debug = require('debug')('koa-oai-router:cache:storage');
 const timestring = require('timestring');
 const { inherits } = require('util');
 const { Client } = require('catbox');
+const catboxMem = require('catbox-memory');
+
 const {
   serialize, deserialize,
 } = require('./helper');
 
 function Storage(engine, options) {
   this.client = new Client(engine, options);
+  this.clientMemory = new Client(catboxMem, { allowMixedContent: true });
 }
 
 Storage.prototype.start = async function name() {
   await this.client.start();
+  await this.clientMemory.start();
 };
 
 /**
@@ -20,10 +24,23 @@ Storage.prototype.start = async function name() {
  * @param {string} key cache key
  * @returns {null|object}
  */
-Storage.prototype.getCacheData = async function getCacheData(key) {
+Storage.prototype.getCacheData = async function getCacheData(key, options) {
+  const {
+    enable = true,
+    memory = false,
+  } = options;
   debug('getCacheData', key);
 
-  const cachedValue = await this.client.get(key);
+  if (!enable) {
+    return null;
+  }
+
+  let cachedValue = null;
+  if (memory) {
+    cachedValue = await this.clientMemory.get(key);
+  } else {
+    cachedValue = await this.client.get(key);
+  }
 
   if (cachedValue !== null) {
     return deserialize(cachedValue.item);
@@ -45,6 +62,7 @@ Storage.prototype.setCacheData = async function setCacheData(key, value, options
   const {
     expire,
     enable = true,
+    memory = false,
   } = options;
   let ttl = expire;
 
@@ -61,7 +79,11 @@ Storage.prototype.setCacheData = async function setCacheData(key, value, options
     const serializedValue = serialize(value);
     debug(`setCacheData ${JSON.stringify(key)} ${serializedValue} ${JSON.stringify(options)}`);
 
-    await this.client.set(key, serializedValue, Number(ttl));
+    if (memory) {
+      await this.clientMemory.set(key, serializedValue, Number(ttl));
+    } else {
+      await this.client.set(key, serializedValue, Number(ttl));
+    }
   });
 };
 

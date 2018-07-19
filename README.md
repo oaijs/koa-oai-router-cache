@@ -63,12 +63,16 @@ npm i koa-oai-router-cache catbox-redis --save
     7. mon, mth, mths, month, months - will parse to months
     8. y, yr, yrs, year, years - will parse to years
     ```
+  * `uid` `boolean` get uid as cache key, default `false`.
+  * `memory` `boolean` use memory cache, `100MB` max.
+
 
 * `options` `object`
   * `hit` `object | boolean` `false` not response header. `true` responses header `x-oai-hit`: true. `string` response header with custom key.
-  * `key` `function` cache key builder. having args (ctx) and must return {id, segment}
+  * `uid` `function` uid key builder. having args (ctx) and must return `string`
+  * `key` `function` cache key builder. having args (ctx) and must return `{id, segment}`
   * `keyInParameters` `boolean` only build cache key in parameters, default `true`
-  * `value` `function` cache value builder. having args (ctx) and must return {type, value}
+  * `value` `function` cache value builder. having args (ctx) and must return `{type, value}`
 
 # Usage
 Simple code:

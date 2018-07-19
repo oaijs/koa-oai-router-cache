@@ -1,6 +1,6 @@
 {
   "name": "koa-oai-router-cache",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "cache plugin for koa-oai-router",
   "main": "src/cache.js",
   "scripts": {
@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "catbox": "^10.0.2",
+    "catbox-memory": "^3.1.2",
     "debug": "^3.1.0",
     "lodash.groupby": "^4.6.0",
     "lodash.map": "^4.6.0",
