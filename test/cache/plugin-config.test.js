@@ -69,4 +69,17 @@ describe('cache plugin config', () => {
 
     await exepectRelyNotCached(request, '/api/pets-enable-true');
   });
+
+  it('uid function set, should success', async () => {
+    const { request } = await high(
+      './test/cache', {
+        url: 'redis://127.0.0.1:6379',
+      }, {
+        uid: (ctx) => {
+          return '123';
+        },
+      });
+
+    await exepectRelyCached(request, '/api/pets-uid-true');
+  });
 });
