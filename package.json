@@ -26,7 +26,7 @@
     "lodash.groupby": "^4.6.0",
     "lodash.map": "^4.6.0",
     "lodash.pick": "^4.4.0",
-    "readall": "^1.0.0",
+    "readall": "^1.1.0",
     "serialize-javascript": "^1.4.0",
     "timestring": "^5.0.0"
   },
